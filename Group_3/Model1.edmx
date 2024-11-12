@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Super_MarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="order_detailss">
+          <Key>
+            <PropertyRef Name="detail_id" />
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="detail_id" Type="int" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="p_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="subtotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orderss">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" />
+          <Property Name="order_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="payments">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="payment_Date" Type="datetime" Nullable="false" />
+          <Property Name="payment_Method" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="p_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="p_price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="p_des" Type="text" />
+        </EntityType>
+        <EntityType Name="shopping_cartss">
+          <Key>
+            <PropertyRef Name="cart_id" />
+          </Key>
+          <Property Name="cart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="u_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="u_pass" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="u_address" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="u_phone" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__orderss__user_id__6477ECF3">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="orderss" Type="Self.orderss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="orderss">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__shopping___user___6E01572D">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="shopping_cartss" Type="Self.shopping_cartss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="shopping_cartss">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Super_MarketModelStoreContainer">
+          <EntitySet Name="order_detailss" EntityType="Self.order_detailss" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orderss" EntityType="Self.orderss" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="payments" EntityType="Self.payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="shopping_cartss" EntityType="Self.shopping_cartss" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__orderss__user_id__6477ECF3" Association="Self.FK__orderss__user_id__6477ECF3">
+            <End Role="users" EntitySet="users" />
+            <End Role="orderss" EntitySet="orderss" />
+          </AssociationSet>
+          <AssociationSet Name="FK__shopping___user___6E01572D" Association="Self.FK__shopping___user___6E01572D">
+            <End Role="users" EntitySet="users" />
+            <End Role="shopping_cartss" EntitySet="shopping_cartss" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Super_MarketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="order_detailss">
+          <Key>
+            <PropertyRef Name="detail_id" />
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="detail_id" Type="Int32" Nullable="false" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="p_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="subtotal" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orderss">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" />
+          <Property Name="order_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="user" Relationship="Self.FK__orderss__user_id__6477ECF3" FromRole="orderss" ToRole="users" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="payment_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="payment_Method" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="p_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="p_price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="p_des" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="shopping_cartss">
+          <Key>
+            <PropertyRef Name="cart_id" />
+          </Key>
+          <Property Name="cart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK__shopping___user___6E01572D" FromRole="shopping_cartss" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="u_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_pass" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ordersses" Relationship="Self.FK__orderss__user_id__6477ECF3" FromRole="users" ToRole="orderss" />
+          <NavigationProperty Name="shopping_cartss" Relationship="Self.FK__shopping___user___6E01572D" FromRole="users" ToRole="shopping_cartss" />
+        </EntityType>
+        <Association Name="FK__orderss__user_id__6477ECF3">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="orderss" Type="Self.orderss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="orderss">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__shopping___user___6E01572D">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="shopping_cartss" Type="Self.shopping_cartss" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="shopping_cartss">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Super_MarketEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="order_detailss" EntityType="Self.order_detailss" />
+          <EntitySet Name="ordersses" EntityType="Self.orderss" />
+          <EntitySet Name="payments" EntityType="Self.payment" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="shopping_cartss" EntityType="Self.shopping_cartss" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK__orderss__user_id__6477ECF3" Association="Self.FK__orderss__user_id__6477ECF3">
+            <End Role="users" EntitySet="users" />
+            <End Role="orderss" EntitySet="ordersses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__shopping___user___6E01572D" Association="Self.FK__shopping___user___6E01572D">
+            <End Role="users" EntitySet="users" />
+            <End Role="shopping_cartss" EntitySet="shopping_cartss" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Super_MarketModelStoreContainer" CdmEntityContainer="Super_MarketEntities2">
+          <EntitySetMapping Name="order_detailss">
+            <EntityTypeMapping TypeName="Super_MarketModel.order_detailss">
+              <MappingFragment StoreEntitySet="order_detailss">
+                <ScalarProperty Name="detail_id" ColumnName="detail_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ordersses">
+            <EntityTypeMapping TypeName="Super_MarketModel.orderss">
+              <MappingFragment StoreEntitySet="orderss">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="order_Date" ColumnName="order_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payments">
+            <EntityTypeMapping TypeName="Super_MarketModel.payment">
+              <MappingFragment StoreEntitySet="payments">
+                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="payment_Date" ColumnName="payment_Date" />
+                <ScalarProperty Name="payment_Method" ColumnName="payment_Method" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="Super_MarketModel.product">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="p_name" ColumnName="p_name" />
+                <ScalarProperty Name="p_price" ColumnName="p_price" />
+                <ScalarProperty Name="p_des" ColumnName="p_des" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="shopping_cartss">
+            <EntityTypeMapping TypeName="Super_MarketModel.shopping_cartss">
+              <MappingFragment StoreEntitySet="shopping_cartss">
+                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="Super_MarketModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="u_name" ColumnName="u_name" />
+                <ScalarProperty Name="u_pass" ColumnName="u_pass" />
+                <ScalarProperty Name="u_address" ColumnName="u_address" />
+                <ScalarProperty Name="u_phone" ColumnName="u_phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
